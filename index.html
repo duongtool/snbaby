@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Happy Birthday Bon 🎂</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Montserrat:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="scene-transition"></div>
+<div id="pass-success">
+  <div class="ps-burst"></div>
+  <div class="ps-text">Happy Birthday Bon 🎂</div>
+  <div class="ps-sub">Đang mở thư…</div>
+</div>
+
+<div id="pass-screen">
+  <div class="pass-aura"></div>
+  <div id="pass-particles"></div>
+  <div class="pass-card">
+    <div class="av-wrap">
+      <img src="image/anh1.jpg" alt="Avatar" class="av-img"
+           onerror="this.style.display='none';document.querySelector('.av-fallback').style.display='flex';" />
+      <div class="av-fallback">🌸</div>
+    </div>
+    <p class="pass-heading">Nhập pass đi người đẹp</p>
+    <div class="dots-row" id="dots">
+      <div class="dot" id="d0"></div><div class="dot" id="d1"></div>
+      <div class="dot" id="d2"></div><div class="dot" id="d3"></div>
+      <div class="dot" id="d4"></div><div class="dot" id="d5"></div>
+      <div class="dot" id="d6"></div><div class="dot" id="d7"></div>
+    </div>
+    <div class="keypad">
+      <button class="key" data-n="1" onclick="press('1')">1</button>
+      <button class="key" data-n="2" onclick="press('2')">2</button>
+      <button class="key" data-n="3" onclick="press('3')">3</button>
+      <button class="key" data-n="4" onclick="press('4')">4</button>
+      <button class="key" data-n="5" onclick="press('5')">5</button>
+      <button class="key" data-n="6" onclick="press('6')">6</button>
+      <button class="key" data-n="7" onclick="press('7')">7</button>
+      <button class="key" data-n="8" onclick="press('8')">8</button>
+      <button class="key" data-n="9" onclick="press('9')">9</button>
+      <button class="key" data-n="0" onclick="press('0')">0</button>
+      <button class="key" style="visibility:hidden" disabled></button>
+      <button class="key key-del" onclick="passDel()">⌫</button>
+    </div>
+  </div>
+</div>
+
+<canvas id="letter-fireworks"></canvas>
+<div id="letter-screen">
+  <div class="letter-bg-aura"></div>
+  <div id="envelope-tap">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;">
+      <div class="envelope-icon" id="envelope-icon">💌</div>
+      <div class="envelope-hint">Nhấn để mở thư nào Bon ơi~</div>
+    </div>
+  </div>
+
+  <div id="letter-content-wrap">
+    <div class="letter-card" style="width:min(680px,95vw);max-height:82vh;display:flex;flex-direction:column;">
+      <div class="letter-header">
+        <div style="display:flex;justify-content:center;margin-bottom:10px;">
+          <img src="https://i.pinimg.com/originals/4e/89/d3/4e89d3e4ec4b1f59b1664e880a875c65.gif"
+               alt="" style="width:min(220px,55%);border-radius:16px;opacity:0.92;
+               box-shadow:0 0 24px rgba(255,95,168,0.35);display:block;"
+               onerror="this.style.display='none'" />
+        </div>
+        <div class="letter-title" id="letter-title"></div>
+        <div class="letter-date" id="letter-date"></div>
+      </div>
+      <div class="letter-body">
+        <div class="letter-content" id="letter-text"></div>
+        <div class="letter-signature" id="letter-signature" style="opacity:0;transition:opacity 0.8s ease;">
+          <div class="letter-signature-line"></div>
+          <div class="letter-signature-label">Ký tên</div>
+          <div class="letter-signature-name" id="sig-name"></div>
+        </div>
+      </div>
+      <div class="letter-footer">
+        <button class="btn-next-scene" id="btn-to-cake" onclick="goToCake()">
+          🎂 Đến bữa tiệc →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="birthday-scene">
+  <div id="rotate-overlay" role="alert" aria-live="polite">
+    <div class="rot-phone"></div>
+    <div class="rot-title">Xoay ngang nhé Bon ơi! 🌸</div>
+    <div class="rot-dots"><i></i><i></i><i></i></div>
+  </div>
+  <div id="starfield"></div>
+  <div id="cake-background"></div>
+  <canvas id="canvas"></canvas>
+  <div id="imagefly-load-overlay" aria-busy="true">
+    <div class="load-cake">🎂</div>
+    <div class="load-bar-wrap"><div class="load-bar-fill" id="load-bar"></div></div>
+    <div class="load-text" id="load-text">Đang chuẩn bị bữa tiệc…</div>
+  </div>
+</div>
+
+<audio id="bgm" autoplay loop muted>
+  <source src="music/tqd.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
+
+
+
