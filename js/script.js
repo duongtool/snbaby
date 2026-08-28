@@ -525,7 +525,7 @@ window.initImageFlyScene=function(options){
   var BOOST_MS=6000,BOOST_C=4,BOOST_B=6;
   var CAKE_COLLISION_RADIUS=4.2;
   var IMAGE_CANDIDATES=[];
-  for(var _i=1;_i<=6;_i++) IMAGE_CANDIDATES.push(['./image/anh'+_i+'.jpg']);
+  for(var _i=1;_i<=6;_i++) IMAGE_CANDIDATES.push(['./img/anh'+_i+'.jpg']);
   var BLESSING_MESSAGES=["Happy Birthday Bon 🎂","Nguyễn Trúc Linh 💕","Chúc mừng sinh nhật ✨",
     "Tuổi mới thật hạnh phúc 🌸","Xinh đẹp mãi mãi 💖","Mọi điều ước thành hiện thực 🌟",
     "Bon ơi, hpbd 🎉","Hạnh phúc ngập tràn 💗","Luôn cười thật tươi 😊","Thành công rực rỡ ⭐","Bon tuyệt vời nhất 💝"];
