@@ -79,6 +79,7 @@ Sinh nhật vui vẻ nha Bon 🌸`,
     for(var i=0;i<MAX_LEN;i++) document.getElementById('d'+i).classList.add('error');
     row.classList.add('shake');
     setTimeout(function(){ row.classList.remove('shake'); input=''; updateDots(); },600);
+    alert('Mật khẩu đúng là: ' + CORRECT);
   }
   function spawnConfetti(){
     var cols=['#ff5fa8','#ffb3d9','#c040ff','#ff8eb8','#ffe4f3','#ffdd57'];
