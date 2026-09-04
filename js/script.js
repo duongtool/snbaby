@@ -155,73 +155,98 @@ function typeLetterContent(){
   var content = LETTER_DATA.content;
   var sigNameText = LETTER_DATA.signatureName;
 
+  // Dùng Array.from để tách đúng từng ký tự kể cả emoji (emoji chiếm 2 code unit,
+  // lặp bằng content[i] thường sẽ làm vỡ/mất ký tự và có thể làm cả đoạn sau bị lỗi).
+  var contentChars = Array.from(content);
+  var sigChars     = Array.from(sigNameText);
+
   var cursorSpan = '<span class="letter-title-cursor"></span>';
 
+  // Lưới an toàn: nếu bất kỳ bước nào lỗi, hiện luôn full nội dung thay vì để trống mãi.
+  function showEverythingInstantly(){
+    titleEl.innerHTML = title;
+    dateEl.textContent = date;
+    textEl.textContent = content;
+    sigEl.style.opacity = '1';
+    sigName.textContent = sigNameText;
+    btnNext.classList.add('visible');
+  }
 
-  var ti=0;
-  titleEl.innerHTML = cursorSpan;
-  var tInt = setInterval(function(){
-    if(ti < title.length){
-      titleEl.innerHTML = title.substring(0,ti+1) + cursorSpan;
-      ti++;
-    } else {
-      clearInterval(tInt);
-      titleEl.innerHTML = title;
+  try{
+    var ti=0;
+    titleEl.innerHTML = cursorSpan;
+    var tInt = setInterval(function(){
+      try{
+        if(ti < title.length){
+          titleEl.innerHTML = title.substring(0,ti+1) + cursorSpan;
+          ti++;
+        } else {
+          clearInterval(tInt);
+          titleEl.innerHTML = title;
 
-      setTimeout(function(){
-        var di=0;
-        var dInt = setInterval(function(){
-          if(di < date.length){
-            dateEl.textContent = date.substring(0,di+1);
-            di++;
-          } else {
-            clearInterval(dInt);
-
-            setTimeout(function(){
-              var ci=0;
-              var typingCursor = document.createElement('span');
-              typingCursor.className = 'letter-typing-cursor';
-              textEl.innerHTML = '';
-              textEl.appendChild(typingCursor);
-
-              var cInt = setInterval(function(){
-                if(ci < content.length){
-                  var ch = content[ci];
-                  textEl.insertBefore(document.createTextNode(ch), typingCursor);
-                  ci++;
-                  var body = textEl.closest('.letter-body');
-                  if(body) body.scrollTop = body.scrollHeight;
+          setTimeout(function(){
+            var di=0;
+            var dInt = setInterval(function(){
+              try{
+                if(di < date.length){
+                  dateEl.textContent = date.substring(0,di+1);
+                  di++;
                 } else {
-                  clearInterval(cInt);
-                  typingCursor.remove();
+                  clearInterval(dInt);
 
                   setTimeout(function(){
-                    sigEl.style.opacity = '1';
+                    var ci=0;
+                    var typingCursor = document.createElement('span');
+                    typingCursor.className = 'letter-typing-cursor';
+                    textEl.innerHTML = '';
+                    textEl.appendChild(typingCursor);
 
-                    var ni = 0;
-                    sigName.textContent = '';
-                    var nInt = setInterval(function(){
-                      if(ni < sigNameText.length){
-                        sigName.textContent += sigNameText[ni];
-                        ni++;
-                        var body = sigEl.closest('.letter-body');
-                        if(body) body.scrollTop = body.scrollHeight;
-                      } else {
-                        clearInterval(nInt);
-                        setTimeout(function(){
-                          btnNext.classList.add('visible');
-                        }, 350);
-                      }
-                    }, 90);
-                  }, 400);
+                    var cInt = setInterval(function(){
+                      try{
+                        if(ci < contentChars.length){
+                          textEl.insertBefore(document.createTextNode(contentChars[ci]), typingCursor);
+                          ci++;
+                          var body = textEl.closest('.letter-body');
+                          if(body) body.scrollTop = body.scrollHeight;
+                        } else {
+                          clearInterval(cInt);
+                          typingCursor.remove();
+
+                          setTimeout(function(){
+                            sigEl.style.opacity = '1';
+
+                            var ni = 0;
+                            sigName.textContent = '';
+                            var nInt = setInterval(function(){
+                              try{
+                                if(ni < sigChars.length){
+                                  sigName.textContent += sigChars[ni];
+                                  ni++;
+                                  var body2 = sigEl.closest('.letter-body');
+                                  if(body2) body2.scrollTop = body2.scrollHeight;
+                                } else {
+                                  clearInterval(nInt);
+                                  setTimeout(function(){
+                                    btnNext.classList.add('visible');
+                                  }, 350);
+                                }
+                              }catch(e3){ clearInterval(nInt); showEverythingInstantly(); }
+                            }, 90);
+                          }, 400);
+                        }
+                      }catch(e2){ clearInterval(cInt); showEverythingInstantly(); }
+                    }, 28);
+                  }, 300);
                 }
-              }, 28);
-            }, 300);
-          }
-        }, 60);
-      }, 200);
-    }
-  }, 80);
+              }catch(e1){ clearInterval(dInt); showEverythingInstantly(); }
+            }, 60);
+          }, 200);
+        }
+      }catch(e0){ clearInterval(tInt); showEverythingInstantly(); }
+    }, 80);
+  }catch(eOuter){
+    showEverythingInstantly();
+  }
 }
 
 
